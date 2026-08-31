@@ -100,7 +100,7 @@ function App() {
         <div className={`app ${darkMode ? "dark" : ""}`}>
             <header className="header">
                 <div className="brand">
-                    <div className="brand-icon">🌤️</div>
+                    <div className="brand-icon">WA</div>
 
                     <div>
                         <h1>Weather Analytics</h1>
@@ -238,19 +238,30 @@ function App() {
                                                 bottom: 5,
                                             }}
                                         >
-                                            <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                                            <CartesianGrid
+                                                strokeDasharray="3 3"
+                                                horizontal={false}
+                                                stroke={darkMode ? "#343940" : "#e1e4e8"}
+                                            />
 
                                             <XAxis
                                                 type="number"
                                                 domain={[0, 100]}
-                                                tick={{ fontSize: 11 }}
+                                                tick={{ fontSize: 11, fill: darkMode ? "#c7ccd2" : "#59616a" }}
+                                                axisLine={{ stroke: darkMode ? "#4a5058" : "#d5d9de" }}
+                                                tickLine={{ stroke: darkMode ? "#4a5058" : "#d5d9de" }}
                                             />
 
                                             <YAxis
                                                 type="category"
                                                 dataKey="cityName"
-                                                width={80}
-                                                tick={{ fontSize: 11 }}
+                                                width={90}
+                                                tick={{
+                                                    fontSize: 11,
+                                                    fill: darkMode ? "#c7ccd2" : "#59616a",
+                                                }}
+                                                axisLine={{ stroke: darkMode ? "#4a5058" : "#d5d9de" }}
+                                                tickLine={{ stroke: darkMode ? "#4a5058" : "#d5d9de" }}
                                             />
 
                                             <Tooltip
@@ -263,8 +274,10 @@ function App() {
                                             <Bar
                                                 dataKey="comfortScore"
                                                 radius={[0, 4, 4, 0]}
-                                                barSize={18}
+                                                barSize={20}
+                                                fill={darkMode ? "#d5d9de" : "#343a40"}
                                             />
+
                                         </BarChart>
                                     </ResponsiveContainer>
                                 </div>

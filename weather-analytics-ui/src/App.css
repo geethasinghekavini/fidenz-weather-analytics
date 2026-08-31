@@ -2,27 +2,45 @@
     box-sizing: border-box;
 }
 
-body {
+html,
+body,
+#root {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+}
+
+body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #f5f6f8;
+    overflow-x: hidden;
 }
 
 .app {
+    width: 100%;
+    min-width: 100%;
+    max-width: none;
     min-height: 100vh;
-    background: #f6f7f9;
-    color: #1f2937;
+    background: #f5f6f8;
+    color: #17191c;
 }
 
-/* Header */
-
+/* =========================
+   HEADER
+========================= */
 .header {
     width: 100%;
-    background: white;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 16px 4%;
+    max-width: none;
+    min-height: 76px;
+    padding: 14px 32px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e4e8;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 }
 
 .brand {
@@ -32,329 +50,470 @@ body {
 }
 
 .brand-icon {
-    font-size: 24px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #17191c;
+    color: white;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
 }
 
 .header h1 {
     margin: 0;
-    font-size: 21px;
+    font-size: 24px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #17191c;
+}
+
+.dark .header h1 {
+    color: #f5f6f7;
+}
+
+.dark .header p {
+    color: #aeb5bd;
 }
 
 .header p {
-    margin: 3px 0 0;
-    color: #6b7280;
-    font-size: 12px;
+    margin: 2px 0 0;
+    color: #34383d;
+    font-size: 11px;
 }
 
 .header-actions {
     display: flex;
+    align-items: center;
     gap: 8px;
 }
 
-.icon-button,
+.theme-button,
 .refresh-button {
     height: 36px;
-    border: 1px solid #e5e7eb;
+    padding: 0 13px;
     border-radius: 6px;
+    border: 1px solid #dfe2e6;
     cursor: pointer;
+    font-size: 12px;
+    transition: background 0.15s ease, border 0.15s ease;
 }
 
-.icon-button {
-    width: 36px;
-    background: #f9fafb;
+.theme-button {
+    background: #ffffff;
+    color: #34383d;
 }
+
+    .theme-button:hover {
+        background: #f5f6f8;
+    }
 
 .refresh-button {
-    padding: 0 13px;
-    background: #1f2937;
-    color: white;
+    background: #17191c;
+    color: #ffffff;
+    border-color: #17191c;
 }
 
-/* Main */
+    .refresh-button:hover {
+        background: #30343a;
+    }
+
+/* =========================
+   MAIN
+========================= */
 
 .dashboard {
-    width: 92%;
-    max-width: 1500px;
-    margin: 24px auto;
+    display: block;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 30px 32px 50px;
 }
 
-/* Summary */
+/* =========================
+   SUMMARY
+========================= */
 
 .summary {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-bottom: 20px;
+    gap: 16px;
+    margin-bottom: 24px;
 }
 
 .summary-card {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 16px 18px;
+    min-height: 104px;
+    background: #ffffff;
+    border: 1px solid #e4e6e9;
+    border-radius: 9px;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
 }
 
     .summary-card span {
         display: block;
-        color: #6b7280;
-        font-size: 12px;
-        margin-bottom: 5px;
+        margin-bottom: 7px;
+        color: #7b8189;
+        font-size: 11px;
+        font-weight: 500;
     }
 
     .summary-card strong {
-        font-size: 20px;
+        display: block;
+        font-size: 23px;
+        font-weight: 650;
+        letter-spacing: -0.4px;
     }
 
-/* Toolbar */
+    .summary-card.highlight {
+        border-left: 3px solid #17191c;
+    }
+
+/* =========================
+   TOOLBAR
+========================= */
 
 .toolbar {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 18px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
 }
 
 .search-box {
-    width: 300px;
-    height: 38px;
+    width: 340px;
+    height: 40px;
     display: flex;
     align-items: center;
-    gap: 7px;
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    padding: 0 10px;
+    background: #ffffff;
+    border: 1px solid #dfe2e6;
+    border-radius: 7px;
+    padding: 0 12px;
 }
 
     .search-box input {
         width: 100%;
         border: none;
         outline: none;
-        font-size: 13px;
+        background: transparent;
+        color: #17191c;
+        font-size: 12px;
     }
 
+        .search-box input::placeholder {
+            color: #9ca1a8;
+        }
+
 .toolbar select {
-    height: 38px;
-    border: 1px solid #e5e7eb;
-    background: white;
-    border-radius: 6px;
-    padding: 0 10px;
-    font-size: 13px;
-    color: #374151;
+    height: 40px;
+    border: 1px solid #dfe2e6;
+    border-radius: 7px;
+    background: #ffffff;
+    padding: 0 12px;
+    color: #454a50;
+    font-size: 12px;
+    cursor: pointer;
 }
 
-/* Section */
+/* =========================
+   SECTION TITLE
+========================= */
 
 .section-title {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
     .section-title h3 {
         margin: 0;
-        font-size: 17px;
+        font-size: 15px;
+        font-weight: 650;
     }
 
     .section-title p {
-        margin: 3px 0 0;
-        color: #6b7280;
-        font-size: 12px;
+        margin: 4px 0 0;
+        color: #68707a;
+        font-size: 11px;
     }
 
-/* Weather Cards */
-
-.weather-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-}
-
-.weather-card {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 16px;
-}
-
-    .weather-card.top-card {
-        border-left: 3px solid #374151;
-    }
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.city-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.weather-icon {
-    width: 42px;
-    height: 42px;
-    background: #f3f4f6;
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 21px;
-}
-
-.rank {
-    display: block;
-    color: #9ca3af;
-    font-size: 9px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-
-.weather-card h3 {
-    margin: 2px 0;
-    font-size: 16px;
-}
-
-.weather-card p {
-    margin: 0;
-    color: #6b7280;
-    font-size: 11px;
-    text-transform: capitalize;
-}
-
-.score {
-    text-align: right;
-}
-
-    .score span {
-        display: block;
-        color: #9ca3af;
-        font-size: 9px;
-    }
-
-    .score strong {
-        font-size: 21px;
-    }
-
-    .score small {
-        color: #9ca3af;
-        font-size: 10px;
-    }
-
-/* Chart */
+/* =========================
+   CHART
+========================= */
 
 .chart-section {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 18px;
+    width: 100%;
+    max-width: none;
+    background: #ffffff;
+    border: 1px solid #e4e6e9;
+    border-radius: 9px;
+    padding: 20px 22px;
+    margin-bottom: 26px;
 }
 
 .chart-container {
     width: 100%;
     height: 300px;
 }
+/* =========================
+   WEATHER GRID
+========================= */
 
-/* Dark mode chart */
-
-.dark .chart-section {
-    background: #1f2937;
-    border-color: #374151;
+.weather-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
 }
 
-/* Score */
+/* =========================
+   WEATHER CARD
+========================= */
+
+.weather-card {
+    background: #ffffff;
+    border: 1px solid #e4e6e9;
+    border-radius: 9px;
+    padding: 20px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .weather-card:hover {
+        border-color: #cfd3d8;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    }
+
+    .weather-card.top-card {
+        border-top: 2px solid #17191c;
+    }
+
+/* =========================
+   CARD HEADER
+========================= */
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.city-info {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.weather-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f3f4f6;
+    border: 1px solid #e6e8eb;
+    border-radius: 7px;
+    color: #545a62;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.rank {
+    display: block;
+    color: #999fa7;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+}
+
+.weather-card h3 {
+    margin: 3px 0 2px;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.weather-card p {
+    margin: 0;
+    color: #626a73;
+}
+
+/* =========================
+   SCORE
+========================= */
+
+    .score {
+    text-align: right;
+    white-space: nowrap;
+}
+
+    .score span {
+        display: block;
+        color: #9298a0;
+        font-size: 9px;
+        font-weight: 500;
+    }
+
+    .score strong {
+        font-size: 22px;
+        font-weight: 650;
+    }
+
+    .score small {
+        margin-left: 2px;
+        color: #969ca4;
+        font-size: 9px;
+    }
+
+/* =========================
+   SCORE BAR
+========================= */
 
 .score-bar {
+    width: 100%;
     height: 4px;
-    background: #eef0f2;
-    border-radius: 4px;
-    margin: 13px 0;
+    margin: 17px 0;
+    background: #eceef0;
+    border-radius: 10px;
     overflow: hidden;
 }
 
     .score-bar div {
         height: 100%;
-        background: #374151;
+        background: #33373c;
+        border-radius: 10px;
     }
 
-/* Temperature */
+/* =========================
+   TEMPERATURE
+========================= */
 
 .temperature {
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 13px;
+    margin-bottom: 17px;
+    font-size: 31px;
+    font-weight: 650;
+    letter-spacing: -1px;
 }
 
     .temperature span {
+        margin-left: 2px;
+        color: #777e87;
         font-size: 13px;
-        color: #6b7280;
+        font-weight: 400;
     }
 
-/* Details */
+/* =========================
+   WEATHER DETAILS
+========================= */
 
 .weather-details {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid #f0f1f3;
-    padding-top: 12px;
+    padding-top: 14px;
+    border-top: 1px solid #eef0f2;
 }
+
+    .weather-details div {
+        min-width: 0;
+    }
 
     .weather-details span {
         display: block;
-        color: #9ca3af;
+        margin-bottom: 4px;
+        color: #949aa2;
         font-size: 9px;
-        margin-bottom: 3px;
     }
 
     .weather-details strong {
+        display: block;
+        color: #34383d;
         font-size: 11px;
+        font-weight: 600;
     }
 
-/* Messages */
+/* =========================
+   LOADING / ERROR
+========================= */
 
 .message,
 .error {
-    background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #e4e6e9;
+    border-radius: 9px;
+    padding: 50px;
     text-align: center;
 }
 
-    .error button {
-        background: #1f2937;
-        color: white;
-        border: none;
-        padding: 8px 14px;
-        border-radius: 6px;
+    .error h3 {
+        margin: 0 0 5px;
     }
 
-/* Footer */
+    .error p {
+        color: #777e87;
+        font-size: 12px;
+    }
+
+    .error button {
+        margin-top: 10px;
+        background: #17191c;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 9px 15px;
+        cursor: pointer;
+    }
+
+.loader {
+    width: 22px;
+    height: 22px;
+    margin: 0 auto 12px;
+    border: 2px solid #e5e7eb;
+    border-top-color: #33373c;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================
+   FOOTER
+========================= */
 
 footer {
+    width: 100%;
+    padding: 22px 32px;
+    border-top: 1px solid #e5e7eb;
     text-align: center;
-    padding: 25px;
-    color: #9ca3af;
+    color: #9298a0;
     font-size: 10px;
 }
 
-/* Dark mode */
+/* =========================
+   DARK MODE
+========================= */
 
 .app.dark {
-    background: #111827;
-    color: #f9fafb;
+    background: #111315;
+    color: #f1f2f3;
 }
 
 .dark .header,
 .dark .summary-card,
 .dark .weather-card,
+.dark .chart-section,
 .dark .search-box,
 .dark .toolbar select,
 .dark .message,
 .dark .error {
-    background: #1f2937;
-    border-color: #374151;
+    background: #191c20;
+    border-color: #3a3f46;
 }
 
     .dark .header p,
@@ -363,56 +522,128 @@ footer {
     .dark .weather-card p,
     .dark .score span,
     .dark .score small,
-    .dark .weather-details span,
     .dark footer {
-        color: #9ca3af;
+        color: #aeb5bd;
     }
 
-    .dark .search-box input,
-    .dark .toolbar select {
-        background: transparent;
-        color: #f9fafb;
+.dark .weather-details span {
+    color: #aeb5bd;
+}
+
+.dark .weather-details strong {
+    color: #f0f2f4;
+}
+
+.dark .brand-icon {
+    background: #f1f2f3;
+    color: #17191c;
+}
+
+.dark .theme-button {
+    background: #1a1d20;
+    color: #e6e8eb;
+    border-color: #30343a;
+}
+
+    .dark .theme-button:hover {
+        background: #23272b;
     }
 
-.dark .weather-icon,
-.dark .icon-button {
-    background: #374151;
+.dark .refresh-button {
+    background: #f1f2f3;
+    color: #17191c;
+    border-color: #f1f2f3;
+}
+
+.dark .search-box input,
+.dark .toolbar select {
+    color: #f1f2f3;
+}
+
+.dark .toolbar select {
+    background: #1a1d20;
+}
+
+.dark .weather-icon {
+    background: #25292d;
+    border-color: #353a40;
+    color: #c8ccd1;
 }
 
 .dark .score-bar {
-    background: #374151;
+    background: #30343a;
 }
 
     .dark .score-bar div {
-        background: #f9fafb;
+        background: #e6e8eb;
     }
 
 .dark .weather-details {
-    border-color: #374151;
+    border-color: #3a3f46;
 }
 
-/* Tablet */
+    .dark .weather-details strong {
+        color: #e1e3e6;
+    }
 
-@media (max-width: 900px) {
+.dark .chart-section {
+    background: #1a1d20;
+}
+
+/* =========================
+   LARGE SCREENS
+========================= */
+
+@media (min-width: 1400px) {
     .weather-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-/* Mobile */
+/* =========================
+   TABLET
+========================= */
 
-@media (max-width: 600px) {
-    .header {
-        padding: 14px 3%;
+@media (max-width: 1000px) {
+    .dashboard {
+        width: calc(100% - 40px);
     }
 
-        .header h1 {
-            font-size: 18px;
+    .weather-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+    .header {
+        height: auto;
+        min-height: 68px;
+        padding: 14px 18px;
+        gap: 15px;
+    }
+
+    .header-actions {
+        gap: 5px;
+    }
+
+    .theme-button {
+        font-size: 0;
+        width: 36px;
+        padding: 0;
+    }
+
+        .theme-button::after {
+            content: "T";
+            font-size: 12px;
         }
 
     .dashboard {
-        width: 94%;
-        margin: 18px auto;
+        width: calc(100% - 28px);
+        padding-top: 20px;
     }
 
     .summary {
@@ -421,18 +652,44 @@ footer {
 
     .toolbar {
         flex-direction: column;
+        align-items: stretch;
     }
 
     .search-box {
         width: 100%;
     }
 
-    .toolbar select {
-        width: 100%;
+    .weather-grid {
+        grid-template-columns: 1fr;
     }
 
     .weather-details {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding-top: 16px;
+        border-top: 1px solid #dfe2e6;
+    }
+
+        .weather-details div {
+            min-width: 0;
+        }
+
+        .weather-details span {
+            display: block;
+            margin-bottom: 5px;
+            color: #68707a;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .weather-details strong {
+            display: block;
+            color: #252a30;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+    .chart-container {
+        height: 280px;
     }
 }
