@@ -48,4 +48,37 @@ public class WeatherService : IWeatherService
 
         return await response.Content.ReadFromJsonAsync<WeatherData>();
     }
+
+    public async Task<List<WeatherResult>> GetWeatherForCitiesAsync(
+    List<City> cities)
+    {
+        var results = new List<WeatherResult>();
+
+        foreach (var city in cities)
+        {
+            var weather = await GetWeatherAsync(city.CityCode);
+
+            if (weather == null)
+            {
+                continue;
+            }
+
+            results.Add(new WeatherResult
+            {
+                CityCode = city.CityCode,
+                CityName = city.CityName,
+                Temperature = weather.Main.Temp,
+                Humidity = weather.Main.Humidity,
+                WindSpeed = weather.Wind.Speed,
+                Cloudiness = weather.Clouds.All,
+                Pressure = weather.Main.Pressure,
+                Visibility = weather.Visibility,
+                WeatherDescription =
+                    weather.Weather.FirstOrDefault()?.Description
+                    ?? "Unknown"
+            });
+        }
+
+        return results;
+    }
 }

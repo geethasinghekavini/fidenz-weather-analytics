@@ -6,5 +6,6 @@ namespace WeatherAnalytics.Api.Services
     public interface IWeatherService
     {
         Task<WeatherData?> GetWeatherAsync(string cityCode);
+        Task<List<WeatherResult>> GetWeatherForCitiesAsync(List<City> cities);
     }
 }

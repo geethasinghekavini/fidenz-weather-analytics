@@ -8,18 +8,34 @@ namespace WeatherAnalytics.Api.Controllers;
 public class WeatherController : ControllerBase
 {
     private readonly IWeatherService _weatherService;
+    private readonly ICityService _cityService;
 
-    public WeatherController(IWeatherService weatherService)
+    public WeatherController(
+        IWeatherService weatherService,
+        ICityService cityService)
     {
         _weatherService = weatherService;
+        _cityService = cityService;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetWeather()
+    {
+        var cities = await _cityService.GetCitiesAsync();
+
+        var weather =
+            await _weatherService.GetWeatherForCitiesAsync(cities);
+
+        return Ok(weather);
     }
 
     [HttpGet("{cityCode}")]
     public async Task<IActionResult> GetWeather(string cityCode)
     {
-        var weather = await _weatherService.GetWeatherAsync(cityCode);
+        var weather =
+            await _weatherService.GetWeatherAsync(cityCode);
 
-        if (weather is null)
+        if (weather == null)
         {
             return NotFound();
         }

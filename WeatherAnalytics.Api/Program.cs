@@ -12,8 +12,7 @@ builder.Services.AddHttpClient<IWeatherService, WeatherService>(client =>
         "https://api.openweathermap.org/data/2.5/");
     client.Timeout = TimeSpan.FromSeconds(10);
 });
-
-
+builder.Services.AddScoped<IComfortIndexService, ComfortIndexService>();
 
 var app = builder.Build();
 

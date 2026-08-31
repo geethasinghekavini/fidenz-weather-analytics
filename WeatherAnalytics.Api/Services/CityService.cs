@@ -11,7 +11,6 @@ public class CityService : ICityService
     {
         _environment = environment;
     }
-
     public async Task<List<City>> GetCitiesAsync()
     {
         var filePath = Path.Combine(
@@ -22,19 +21,14 @@ public class CityService : ICityService
         if (!File.Exists(filePath))
         {
             throw new FileNotFoundException(
-                "The cities.json file could not be found.",
+                "cities.json file was not found.",
                 filePath);
         }
 
-        await using var stream = File.OpenRead(filePath);
+        var json = await File.ReadAllTextAsync(filePath);
 
-        var cityList = await JsonSerializer.DeserializeAsync<CityList>(
-            stream,
-            new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+        var cityData = JsonSerializer.Deserialize<CityData>(json);
 
-        return cityList?.List ?? new List<City>();
+        return cityData?.List ?? new List<City>();
     }
 }
