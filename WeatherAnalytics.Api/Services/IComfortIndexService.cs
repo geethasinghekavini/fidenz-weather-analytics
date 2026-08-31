@@ -4,10 +4,6 @@ namespace WeatherAnalytics.Api.Services
 {
     public interface IComfortIndexService
     {
-        double Calculate(
-            double temperature,
-            int humidity,
-            double windSpeed,
-            int cloudiness);
+        double Calculate(double temperature, double humidity, double windSpeed, double cloudiness);
     }
 }

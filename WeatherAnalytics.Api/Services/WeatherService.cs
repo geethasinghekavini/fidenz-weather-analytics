@@ -8,13 +8,16 @@ public class WeatherService : IWeatherService
 {
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
+    private readonly IComfortIndexService _comfortIndexService;
 
     public WeatherService(
-        HttpClient httpClient,
-        IConfiguration configuration)
+    HttpClient httpClient,
+    IConfiguration configuration,
+    IComfortIndexService comfortIndexService)
     {
         _httpClient = httpClient;
         _configuration = configuration;
+        _comfortIndexService = comfortIndexService;
     }
 
     public async Task<WeatherData?> GetWeatherAsync(string cityCode)
@@ -63,6 +66,12 @@ public class WeatherService : IWeatherService
                 continue;
             }
 
+            var comfortScore = _comfortIndexService.Calculate(
+             weather.Main.Temp,
+             weather.Main.Humidity,
+             weather.Wind.Speed,
+             weather.Clouds.All);
+
             results.Add(new WeatherResult
             {
                 CityCode = city.CityCode,
@@ -75,10 +84,20 @@ public class WeatherService : IWeatherService
                 Visibility = weather.Visibility,
                 WeatherDescription =
                     weather.Weather.FirstOrDefault()?.Description
-                    ?? "Unknown"
+                    ?? "Unknown",
+                ComfortScore = comfortScore
             });
         }
 
-        return results;
+        var rankedResults = results
+    .OrderByDescending(x => x.ComfortScore)
+    .ToList();
+
+        for (var i = 0; i < rankedResults.Count; i++)
+        {
+            rankedResults[i].Rank = i + 1;
+        }
+
+        return rankedResults;
     }
 }
