@@ -42,4 +42,10 @@ public class WeatherController : ControllerBase
 
         return Ok(weather);
     }
+
+    [HttpGet("cache-status")]
+    public IActionResult GetCacheStatus()
+    {
+        return Ok(_weatherService.GetCacheStatus());
+    }
 }

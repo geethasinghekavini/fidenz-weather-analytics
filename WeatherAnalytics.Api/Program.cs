@@ -1,19 +1,20 @@
 using WeatherAnalytics.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IComfortIndexService, ComfortIndexService>();
+builder.Services.AddSingleton<CacheStatusService>();
 builder.Services.AddHttpClient<IWeatherService, WeatherService>(client =>
 {
     client.BaseAddress = new Uri(
         "https://api.openweathermap.org/data/2.5/");
     client.Timeout = TimeSpan.FromSeconds(10);
 });
-builder.Services.AddScoped<IComfortIndexService, ComfortIndexService>();
 
 var app = builder.Build();
 

@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+using Microsoft.Extensions.Caching.Memory;
 using WeatherAnalytics.Api.Models;
+
 
 namespace WeatherAnalytics.Api.Services;
 
@@ -9,19 +11,34 @@ public class WeatherService : IWeatherService
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
     private readonly IComfortIndexService _comfortIndexService;
+    private readonly IMemoryCache _cache;
+    private readonly CacheStatusService _cacheStatusService;
 
     public WeatherService(
     HttpClient httpClient,
     IConfiguration configuration,
+    IMemoryCache cache,
+    CacheStatusService cacheStatusService,
     IComfortIndexService comfortIndexService)
     {
         _httpClient = httpClient;
         _configuration = configuration;
+        _cache = cache;
+        _cacheStatusService = cacheStatusService;
         _comfortIndexService = comfortIndexService;
     }
 
     public async Task<WeatherData?> GetWeatherAsync(string cityCode)
     {
+        var cacheKey = $"weather_{cityCode}";
+
+        if (_cache.TryGetValue(cacheKey, out WeatherData? cachedWeather))
+        {
+            _cacheStatusService.SetStatus(cityCode, "HIT");
+            return cachedWeather;
+        }
+
+        _cacheStatusService.SetStatus(cityCode, "MISS");
         var apiKey = _configuration["OpenWeatherMap:ApiKey"];
 
         if (string.IsNullOrWhiteSpace(apiKey))
@@ -49,11 +66,22 @@ public class WeatherService : IWeatherService
             throw new HttpRequestException( $"OpenWeatherMap request failed with status code {(int)response.StatusCode}.");
         }
 
-        return await response.Content.ReadFromJsonAsync<WeatherData>();
+        var weatherData =
+    await response.Content.ReadFromJsonAsync<WeatherData>();
+
+        if (weatherData != null)
+        {
+            _cache.Set(
+                cacheKey,
+                weatherData,
+                TimeSpan.FromMinutes(5));
+        }
+
+        return weatherData;
     }
 
     public async Task<List<WeatherResult>> GetWeatherForCitiesAsync(
-    List<City> cities)
+       List<City> cities)
     {
         var results = new List<WeatherResult>();
 
@@ -66,11 +94,19 @@ public class WeatherService : IWeatherService
                 continue;
             }
 
+            if (weather.Main == null ||
+                weather.Wind == null ||
+                weather.Clouds == null)
+            {
+                throw new InvalidOperationException(
+                    $"Incomplete weather data received for city code {city.CityCode}.");
+            }
+
             var comfortScore = _comfortIndexService.Calculate(
-             weather.Main.Temp,
-             weather.Main.Humidity,
-             weather.Wind.Speed,
-             weather.Clouds.All);
+                weather.Main.Temp,
+                weather.Main.Humidity,
+                weather.Wind.Speed,
+                weather.Clouds.All);
 
             results.Add(new WeatherResult
             {
@@ -90,8 +126,8 @@ public class WeatherService : IWeatherService
         }
 
         var rankedResults = results
-    .OrderByDescending(x => x.ComfortScore)
-    .ToList();
+            .OrderByDescending(x => x.ComfortScore)
+            .ToList();
 
         for (var i = 0; i < rankedResults.Count; i++)
         {
@@ -99,5 +135,9 @@ public class WeatherService : IWeatherService
         }
 
         return rankedResults;
+    }
+    public Dictionary<string, string> GetCacheStatus()
+    {
+        return _cacheStatusService.GetStatus();
     }
 }

@@ -7,5 +7,6 @@ namespace WeatherAnalytics.Api.Services
     {
         Task<WeatherData?> GetWeatherAsync(string cityCode);
         Task<List<WeatherResult>> GetWeatherForCitiesAsync(List<City> cities);
+        Dictionary<string, string> GetCacheStatus();
     }
 }
