@@ -4,7 +4,8 @@
 Kavini Geethasinghe
 Developed as part of the Fidenz Technologies Trainee Software Engineer assessment.
 
-![Uploading image.png…]()
+<img width="1763" height="2846" alt="image" src="https://github.com/user-attachments/assets/0c23d46f-d194-4ef6-a421-f6e8dd317a11" />
+
 
 
 
