@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WeatherAnalytics.Api.Services;
 
 namespace WeatherAnalytics.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class WeatherController : ControllerBase
 {
     private readonly IWeatherService _weatherService;
