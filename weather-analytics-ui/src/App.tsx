@@ -1,4 +1,5 @@
 ﻿import { useEffect, useMemo, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./App.css";
 
 import {
@@ -40,22 +41,38 @@ function getWeatherIcon(description: string) {
 }
 
 function App() {
+    const {
+        isAuthenticated,
+        isLoading: authLoading,
+        loginWithRedirect,
+        logout,
+        user,
+        getAccessTokenSilently,
+    } = useAuth0();
+
     const [weather, setWeather] = useState<WeatherData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [search, setSearch] = useState("");
     const [sortBy, setSortBy] = useState("rank");
     const [darkMode, setDarkMode] = useState(false);
-
     const fetchWeather = async () => {
         try {
             setLoading(true);
             setError("");
 
-            const response = await fetch(API_URL);
+            const accessToken = await getAccessTokenSilently();
+
+            const response = await fetch(API_URL, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
 
             if (!response.ok) {
-                throw new Error("Failed to load weather data.");
+                throw new Error(
+                    `Failed to load weather data. Status: ${response.status}`
+                );
             }
 
             const data: WeatherData[] = await response.json();
@@ -73,8 +90,10 @@ function App() {
     };
 
     useEffect(() => {
-        fetchWeather();
-    }, []);
+        if (isAuthenticated) {
+            fetchWeather();
+        }
+    }, [isAuthenticated]);
 
     const filteredWeather = useMemo(() => {
         const result = weather.filter((city) =>
@@ -96,7 +115,37 @@ function App() {
         });
     }, [weather, search, sortBy]);
 
+    if (authLoading) {
+        return (
+            <div className="app">
+                <div className="message">
+                    <div className="loader"></div>
+                    <p>Checking authentication...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!isAuthenticated) {
+        return (
+            <div className="app">
+                <main className="dashboard">
+                    <section className="message">
+                        <h2>Weather Analytics</h2>
+                        <p>Please log in to access the weather dashboard.</p>
+
+                        <button onClick={() => loginWithRedirect()}>
+                            Login
+                        </button>
+                    </section>
+                </main>
+            </div>
+        );
+    }
+
     return (
+
+     
         <div className={`app ${darkMode ? "dark" : ""}`}>
             <header className="header">
                 <div className="brand">
@@ -122,6 +171,25 @@ function App() {
                         onClick={fetchWeather}
                     >
                         ↻ Refresh
+                    </button>
+
+                    {user?.email && (
+                        <span className="user-email">
+                            {user.email}
+                        </span>
+                    )}
+
+                    <button
+                        className="refresh-button"
+                        onClick={() =>
+                            logout({
+                                logoutParams: {
+                                    returnTo: window.location.origin,
+                                },
+                            })
+                        }
+                    >
+                        Logout
                     </button>
                 </div>
             </header>

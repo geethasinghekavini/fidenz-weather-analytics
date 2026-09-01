@@ -28,9 +28,7 @@ body {
     color: #17191c;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 .header {
     width: 100%;
     max-width: none;
@@ -122,9 +120,7 @@ body {
         background: #30343a;
     }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .dashboard {
     display: block;
@@ -134,9 +130,7 @@ body {
     padding: 30px 32px 50px;
 }
 
-/* =========================
-   SUMMARY
-========================= */
+/* SUMMARY */
 
 .summary {
     display: grid;
@@ -174,9 +168,7 @@ body {
         border-left: 3px solid #17191c;
     }
 
-/* =========================
-   TOOLBAR
-========================= */
+/* TOOLBAR */
 
 .toolbar {
     display: flex;
@@ -221,9 +213,7 @@ body {
     cursor: pointer;
 }
 
-/* =========================
-   SECTION TITLE
-========================= */
+/* SECTION TITLE */
 
 .section-title {
     margin-bottom: 12px;
@@ -241,9 +231,7 @@ body {
         font-size: 11px;
     }
 
-/* =========================
-   CHART
-========================= */
+/*  CHART  */
 
 .chart-section {
     width: 100%;
@@ -259,9 +247,7 @@ body {
     width: 100%;
     height: 300px;
 }
-/* =========================
-   WEATHER GRID
-========================= */
+/*   WEATHER GRID */
 
 .weather-grid {
     width: 100%;
@@ -270,9 +256,7 @@ body {
     gap: 18px;
 }
 
-/* =========================
-   WEATHER CARD
-========================= */
+/*  WEATHER CARD */
 
 .weather-card {
     background: #ffffff;
@@ -291,9 +275,7 @@ body {
         border-top: 2px solid #17191c;
     }
 
-/* =========================
-   CARD HEADER
-========================= */
+/*  CARD HEADER  */
 
 .card-header {
     display: flex;
@@ -341,9 +323,7 @@ body {
     color: #626a73;
 }
 
-/* =========================
-   SCORE
-========================= */
+/*  SCORE  */
 
     .score {
     text-align: right;
@@ -368,9 +348,7 @@ body {
         font-size: 9px;
     }
 
-/* =========================
-   SCORE BAR
-========================= */
+/* SCORE BAR */
 
 .score-bar {
     width: 100%;
@@ -387,9 +365,7 @@ body {
         border-radius: 10px;
     }
 
-/* =========================
-   TEMPERATURE
-========================= */
+/*  TEMPERATURE */
 
 .temperature {
     margin-bottom: 17px;
@@ -405,9 +381,7 @@ body {
         font-weight: 400;
     }
 
-/* =========================
-   WEATHER DETAILS
-========================= */
+/*  WEATHER DETAILS */
 
 .weather-details {
     display: grid;
@@ -434,9 +408,7 @@ body {
         font-weight: 600;
     }
 
-/* =========================
-   LOADING / ERROR
-========================= */
+/*  LOADING / ERROR */
 
 .message,
 .error {
@@ -482,9 +454,7 @@ body {
     }
 }
 
-/* =========================
-   FOOTER
-========================= */
+/*  FOOTER  */
 
 footer {
     width: 100%;
@@ -495,9 +465,7 @@ footer {
     font-size: 10px;
 }
 
-/* =========================
-   DARK MODE
-========================= */
+/*  DARK MODE  */
 
 .app.dark {
     background: #111315;
@@ -590,9 +558,7 @@ footer {
     background: #1a1d20;
 }
 
-/* =========================
-   LARGE SCREENS
-========================= */
+/*  LARGE SCREENS  */
 
 @media (min-width: 1400px) {
     .weather-grid {
@@ -600,9 +566,7 @@ footer {
     }
 }
 
-/* =========================
-   TABLET
-========================= */
+/*  TABLET  */
 
 @media (max-width: 1000px) {
     .dashboard {
@@ -614,9 +578,7 @@ footer {
     }
 }
 
-/* =========================
-   MOBILE
-========================= */
+/*  MOBILE */
 
 @media (max-width: 700px) {
     .header {
